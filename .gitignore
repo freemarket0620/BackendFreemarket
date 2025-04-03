@@ -26,3 +26,4 @@ Thumbs.db
 
 # Cloudinary
 manifest/
+.env
