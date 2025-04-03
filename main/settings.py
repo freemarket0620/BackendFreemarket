@@ -21,12 +21,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'valor-por-defecto-para-desarrollo')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']  # Temporal para desarrollo, en producción especifica los hosts
 ALLOWED_HOSTS = [
-    'https://backenddj-ucdx.onrender.com',  # Reemplaza con tu URL real de Render
-    '35.160.120.126'
-    '44.233.151.27'
-    '34.211.200.85'
+    'backenddj-ucdx.onrender.com',  # Sin https://
     'localhost',
     '127.0.0.1'
 ]
@@ -129,9 +125,9 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Media files (Usando Cloudinary)
 MEDIA_URL = '/media/'  # Esta URL se usará para referenciar los archivos
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
