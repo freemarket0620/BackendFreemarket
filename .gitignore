@@ -1,29 +1,28 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
+# Django
+*.log
+*.pot
 *.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
 
 # Environments
 .env
 .venv/
 env/
 venv/
-
-# Database
-*.sqlite3
-*.db
-
-# Django
-media/
-staticfiles/
+env.py
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # System
 .DS_Store
-Thumbs.db__pycache__/
-*.pyc
+Thumbs.db
+
+# Cloudinary
+manifest/
