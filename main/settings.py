@@ -80,18 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-# Database
-""" DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'freemarket',
-        'USER': 'postgres',
-        'PASSWORD': '13247291',
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
-} """
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -133,6 +121,14 @@ MEDIA_URL = '/media/'  # Esta URL se usará para referenciar los archivos
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Cloudinary configuration
+# settings.py
+
+# Configuración de seguridad
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Configuración de Cloudinary (asegúrate que usa variables de entorno)
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
