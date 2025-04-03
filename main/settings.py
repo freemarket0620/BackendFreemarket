@@ -15,13 +15,21 @@ from cloudinary.utils import cloudinary_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-kw5d5g509&zw(cn14nwvrwa$-$uh&)i9j^w#hajmu_wi1udj5m'
-
+""" SECRET_KEY = 'django-insecure-kw5d5g509&zw(cn14nwvrwa$-$uh&)i9j^w#hajmu_wi1udj5m' """
+# Por:
+SECRET_KEY = os.getenv('SECRET_KEY', 'valor-por-defecto-para-desarrollo')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']  # Temporal para desarrollo, en producción especifica los hosts
-
+ALLOWED_HOSTS = [
+    'https://backenddj-ucdx.onrender.com',  # Reemplaza con tu URL real de Render
+    '35.160.120.126'
+    '44.233.151.27'
+    '34.211.200.85'
+    'localhost',
+    '127.0.0.1'
+]
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -130,10 +138,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Cloudinary configuration
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dlrpns8z7',
-    'API_KEY': '519856566866529',
-    'API_SECRET': 'O5e6Ij9h5bO0619zN6oycD-VdVY',
-    
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
     'SECURE': True,
 }
 cloudinary.config(
@@ -183,6 +190,7 @@ CORS_ALLOW_ALL_ORIGINS = False  # Más seguro que True en producción
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
+    "https://tu-frontend.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()

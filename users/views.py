@@ -1,6 +1,5 @@
 #views.py
 from datetime import timedelta
-
 from confection import Config
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -19,12 +18,11 @@ import json
 from cloudinary.uploader import upload
 import cloudinary.uploader
 
-
 from .models import Categorias, DetallesVentas, Permisos, Productos,  Roles,  Usuarios, RolesPermisos, UsuariosRoles, Ventas
 from .serializers import   CategoriaSerializer,  DetallesVentasSerializer, PermisosSerializer,  ProductoSerializer, RolSerializer, RolesPermisosSerializer, UsuarioSerializer, LoginSerializer, UsuariosRolesSerializer, VentaSerializer
 
 
-# backend
+""" esto es la seccion de login """
 # backend
 class LoginView(APIView):
     authentication_classes = []  # Elimina autenticación solo para login
