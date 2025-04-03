@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Por:
 SECRET_KEY = os.getenv('SECRET_KEY', 'valor-por-defecto-para-desarrollo')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'backenddj-ucdx.onrender.com',  # Sin https://
