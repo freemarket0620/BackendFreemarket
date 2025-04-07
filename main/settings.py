@@ -182,7 +182,10 @@ CORS_ALLOW_ALL_ORIGINS = False  # Más seguro que True en producción
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
-    "https://tu-frontend.vercel.app",
+    "https://bolivia-freemarket.netlify.app",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://bolivia-freemarket.netlify.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
