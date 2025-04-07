@@ -21,11 +21,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'valor-por-defecto-para-desarrollo')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = [
-    'backenddj-ucdx.onrender.com',  # Sin https://
-    'localhost',
-    '127.0.0.1'
-]
+
+ALLOWED_HOSTS = ['backenddj-cc4p.onrender.com', 'localhost', '127.0.0.1']
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
