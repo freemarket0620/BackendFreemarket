@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: backenddj
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn main.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        value: tu_clave_secreta
+      - key: DB_NAME
+        value: freemarket
+      - key: DB_USER
+        value: freemarket_user
+      - key: DB_PASSWORD
+        value: E56Q9mldBA52Gh47RYBRlrZubgEoREJB
+      - key: DB_HOST
+        value: dpg-cvmkk7umcj7s738tjtog-a.oregon-postgres.render.com
+      - key: DB_PORT
+        value: 5432
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dlrpns8z7
+      - key: CLOUDINARY_API_KEY
+        value: 519856566866529
+      - key: CLOUDINARY_API_SECRET
+        value: O5e6Ij9h5bO0619zN6oycD-VdVY
+      - key: DEBUG
+        value: False
