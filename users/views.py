@@ -17,6 +17,8 @@ from rest_framework.exceptions import PermissionDenied
 import json
 from cloudinary.uploader import upload
 import cloudinary.uploader
+import pytz
+from django.utils import timezone
 
 from .models import Categorias, DetallesVentas, Permisos, Productos,  Roles,  Usuarios, RolesPermisos, UsuariosRoles, Ventas
 from .serializers import   CategoriaSerializer,  DetallesVentasSerializer, PermisosSerializer,  ProductoSerializer, RolSerializer, RolesPermisosSerializer, UsuarioSerializer, LoginSerializer, UsuariosRolesSerializer, VentaSerializer
@@ -333,11 +335,15 @@ class VentasViewSet(viewsets.ModelViewSet):
         except Usuarios.DoesNotExist:
             return Response({"error": "El usuario especificado no existe."}, status=status.HTTP_400_BAD_REQUEST)
 
+        # Obtener la hora actual en la zona horaria local
+        local_tz = pytz.timezone('America/La_Paz')  # Cambia esto a tu zona horaria
+        fecha_venta = timezone.now().astimezone(local_tz)
         # Crear la venta
         data = {
             'usuario': usuario,
             'estado': request.data.get('estado', 'Pendiente'),
-            'total': request.data.get('total'),
+            'total': request.data.get('total', 0.00),
+            'fecha_venta': fecha_venta,
         }
         venta = Ventas.objects.create(**data)
 
