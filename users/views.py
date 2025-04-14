@@ -1,4 +1,6 @@
 #views.py
+from datetime import datetime
+import pytz
 from datetime import timedelta
 from confection import Config
 from django.shortcuts import render
@@ -17,7 +19,7 @@ from rest_framework.exceptions import PermissionDenied
 import json
 from cloudinary.uploader import upload
 import cloudinary.uploader
-import pytz
+
 from django.utils import timezone
 
 from .models import Categorias, DetallesVentas, Permisos, Productos,  Roles,  Usuarios, RolesPermisos, UsuariosRoles, Ventas
@@ -335,20 +337,22 @@ class VentasViewSet(viewsets.ModelViewSet):
         except Usuarios.DoesNotExist:
             return Response({"error": "El usuario especificado no existe."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Obtener la hora actual en la zona horaria local
-        local_tz = pytz.timezone('America/La_Paz')  # Cambia esto a tu zona horaria
-        fecha_venta = timezone.now().astimezone(local_tz)
+        # Obtener la hora actual en la zona horaria local de Bolivia
+        local_tz = pytz.timezone('America/La_Paz')  # Zona horaria de Bolivia
+        fecha_venta = datetime.now(local_tz)  # Obtener la hora local directamente
+
         # Crear la venta
         data = {
             'usuario': usuario,
             'estado': request.data.get('estado', 'Pendiente'),
-            'total': request.data.get('total', 0.00),
-            'fecha_venta': fecha_venta,
+            'total': request.data.get('total', 0.00),  # Asegúrate de que el total tenga un valor por defecto
+            'fecha_venta': fecha_venta,  # Este campo se manejará automáticamente en el modelo
         }
         venta = Ventas.objects.create(**data)
 
         return Response(VentaSerializer(venta).data, status=status.HTTP_201_CREATED)
     
+      
 class DetallesVentasViewSet(viewsets.ModelViewSet):
     queryset = DetallesVentas.objects.all()
     serializer_class = DetallesVentasSerializer
