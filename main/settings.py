@@ -23,7 +23,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
 ALLOWED_HOSTS = ['backenddj-cc4p.onrender.com', 'localhost', '127.0.0.1']
-
+#https://backendbarraca.onrender.com
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',  # Debe ir antes que staticfiles
     'django.contrib.staticfiles',
     
     # Third-party apps
@@ -81,13 +80,14 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'freemarket'),  # Valor por defecto si no existe la variable
-        'USER': os.getenv('DB_USER', 'freemarket_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'E56Q9mldBA52Gh47RYBRlrZubgEoREJB'),
-        'HOST': os.getenv('DB_HOST', 'dpg-cvmkk7umcj7s738tjtog-a.oregon-postgres.render.com'),
+        'NAME': os.getenv('DB_NAME', 'freemarket_91x1'),  # Valor por defecto si no existe la variable
+        'USER': os.getenv('DB_USER', 'freemarket_91x1_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'OaBeBNRuiHFRDGClBxpBfKkNWq8T8Qv8'),
+        'HOST': os.getenv('DB_HOST', 'dpg-d19m17mmcj7s73ek01hg-a.oregon-postgres.render.com'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -128,15 +128,15 @@ CSRF_COOKIE_SECURE = True
 
 # Configuración de Cloudinary (asegúrate que usa variables de entorno)
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': os.getenv('dz45dhxii'),
+    'API_KEY': os.getenv('419624749789857'),
+    'API_SECRET': os.getenv('lOJH1C6pH2HT9IaeMn89fhVF3Vk'),
     'SECURE': True,
 }
 cloudinary.config(
-    cloud_name="dlrpns8z7",
-    api_key="519856566866529",
-    api_secret="O5e6Ij9h5bO0619zN6oycD-VdVY"
+    cloud_name="dz45dhxii",
+    api_key="419624749789857",
+    api_secret="lOJH1C6pH2HT9IaeMn89fhVF3Vk"
 )
 
 CLOUDINARY_URL = 'cloudinary://API_KEY:API_SECRET@CLOUD_NAME'
