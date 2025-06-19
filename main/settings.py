@@ -22,8 +22,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'valor-por-defecto-para-desarrollo')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
-ALLOWED_HOSTS = ['backenddj-cc4p.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['backendfreemarket.onrender.com', 'localhost', '127.0.0.1']
 #https://backendbarraca.onrender.com
+#https://backendfreemarket.onrender.com
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
