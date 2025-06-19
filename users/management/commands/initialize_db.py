@@ -27,6 +27,10 @@ class Command(BaseCommand):
             {"nombre_permiso": "registrarVenta", "descripcion": "a"},
             {"nombre_permiso": "registrarDetalleVenta", "descripcion": "a"},
             {"nombre_permiso": "registrarVenta-DetalleVenta-Empleado", "descripcion": "a"},
+            {"nombre_permiso": "registrarVenta-Empleado", "descripcion": "Permite al empleado registrar ventas"},
+            {"nombre_permiso": "registrarVenta-DetalleVenta-Administrador", "descripcion": "Administrador puede vender con detalle"},
+            {"nombre_permiso": "PedidoTarjetas", "descripcion": "Permite realizar pedidos de tarjetas"},
+
         ]
         
         permisos_objects = []
