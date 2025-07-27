@@ -75,7 +75,7 @@ TEMPLATES = [
         },
     },
 ]
-""" cambiar de base de datos """
+""" cambiar de base de datos 1234"""
 WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
