@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'freemarket_91x1'),  # Valor por defecto si no existe la variable
-        'USER': os.getenv('DB_USER', 'freemarket_91x1_user'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'OaBeBNRuiHFRDGClBxpBfKkNWq8T8Qv8'),
-        'HOST': os.getenv('DB_HOST', 'dpg-d19m17mmcj7s73ek01hg-a.oregon-postgres.render.com'),
+        'NAME': os.getenv('DB_NAME', 'freemarket_a1m2'),  # Valor por defecto si no existe la variable
+        'USER': os.getenv('DB_USER', 'freemarket_a1m2_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '4V3AHA3wlcAx4eoRnUGLJUnqOXpCCuQo'),
+        'HOST': os.getenv('DB_HOST', 'dpg-d233e2u3jp1c739g1ud0-a.oregon-postgres.render.com'),
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
