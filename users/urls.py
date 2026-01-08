@@ -1,36 +1,30 @@
-#urls.py
+# urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import (
-    CategoriasViewSet,
-    DetallesVentasViewSet,
-    LoginView,
-    PermisosViewSet,
-    ProductosViewSet,
-    RolesViewSet,
-    UsuariosViewSet,
-    UsuariosRolesViewSet,
-    RolesPermisosViewSet,
-    VentasViewSet,
-)
-from . import views
+from . import views_usuarios, views_produtos
+
+
 # Crea un router y registra tus ViewSets
 router = DefaultRouter()
-router.register(r'permisos', PermisosViewSet)
-router.register(r'roles', RolesViewSet)
-router.register(r'usuarios', UsuariosViewSet)
-router.register(r'usuariosroles', UsuariosRolesViewSet)
-router.register(r'rolespermisos', RolesPermisosViewSet)
+router.register(r"permisos", views_usuarios.PermisosViewSet)
+router.register(r"roles", views_usuarios.RolesViewSet)
+router.register(r"usuarios", views_usuarios.UsuariosViewSet)
+router.register(r"usuariosroles", views_usuarios.UsuariosRolesViewSet)
+router.register(r"rolespermisos", views_usuarios.RolesPermisosViewSet)
 
-# rutas de ventas 
-router.register(r'categorias', CategoriasViewSet)  
-router.register(r'productos', ProductosViewSet)    
-router.register(r'ventas', VentasViewSet)
-router.register(r'detallesventas', DetallesVentasViewSet) 
+# rutas de ventas
+router.register(r"categorias", views_produtos.CategoriasViewSet)
+router.register(r"productos", views_produtos.ProductosViewSet)
+router.register(r"ventas", views_produtos.VentasViewSet)
+router.register(r"detallesventas", views_produtos.DetallesVentasViewSet)
+
+# rutas de ventas de jeugos
+router.register(r"RecargaProducto", views_produtos.RecargaProductoViewSet)
+router.register(r"DetalleVentaRecarga", views_produtos.DetalleVentaRecargaViewSet)
 
 
 urlpatterns = [
-    path('', include(router.urls)),  # Incluye las rutas generadas por el router
-    path('login/', LoginView.as_view(), name='login'),  # Ruta para el inicio de sesión
+    path("", include(router.urls)),
+    path("login/", views_usuarios.LoginView.as_view(), name="login"),
 ]

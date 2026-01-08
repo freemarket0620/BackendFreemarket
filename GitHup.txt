@@ -1,0 +1,66 @@
+
+
+git config --global user.name "freemarket0620"
+git config --global user.email "freemarket0620@gmail.com"
+Username for 'https://github.com': freemarket0620
+Password for 'https://github.com': yucumo12345*
+
+git init
+git status
+git add .
+git commit -m "fin"
+git remote add origin https://github.com/freemarket0620/FrontendFreemarket.git
+git push -u origin main
+
+git push -u origin main
+git checkout -b Produccion 
+
+
+
+git config --global user.name "freemarket0620"
+git config --global user.email "freemarket0620@gmail.com"
+
+git init
+git status
+git add .
+git commit -m "fin"
+git remote add origin https://github.com/freemarket0620/BackendFreemarket.git
+git push -u origin main
+
+git push -u origin main
+git checkout -b Produccion 
+
+
+
+git config --global user.name "Andrés66666"
+git config --global user.email "cya2024773@est.univalle.edu"
+
+git init
+git status
+git add .
+git commit -m "Primer lib"
+git remote add origin https://github.com/Andres66666/GuardianUnivalle-Benito-Yucra.git
+git push -u origin main
+git checkout -b Produccion 
+git push -u origin Produccion
+
+
+git pull origin main
+git fetch --all
+git reset --hard origin/main
+
+
+""" DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "Ecuacion",
+        "USER": "postgres",
+        "PASSWORD": "13247291",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+} """
+
+pip install -r requirements.txt
+
+gunicorn main.wsgi
