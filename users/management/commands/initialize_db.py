@@ -48,6 +48,14 @@ class Command(BaseCommand):
                 "nombre_permiso": "PedidoTarjetas",
                 "descripcion": "Permite realizar pedidos de tarjetas",
             },
+            {
+                "nombre_permiso": "RegistrarJuegos",
+                "descripcion": "permite registrar los jeugos mas vendidos",
+            },
+            {
+                "nombre_permiso": "VenderJugos",
+                "descripcion": "permite vender los jeugos mas vendidos",
+            },
         ]
 
         permisos_objects = []

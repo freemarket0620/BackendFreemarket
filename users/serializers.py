@@ -101,9 +101,7 @@ class RecargaProductoSerializer(serializers.ModelSerializer):
 
 
 class DetalleVentaRecargaSerializer(serializers.ModelSerializer):
-    # Cambiamos read_only a ForeignKey normal para que acepte IDs
-    venta = serializers.PrimaryKeyRelatedField(queryset=Ventas.objects.all())
-    recarga = serializers.PrimaryKeyRelatedField(queryset=RecargaProducto.objects.all())
+    recarga = RecargaProductoSerializer(read_only=True)
 
     class Meta:
         model = DetalleVentaRecarga

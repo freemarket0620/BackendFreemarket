@@ -184,9 +184,6 @@ class DetalleVentaRecarga(models.Model):
         ("CANCELADO", "Cancelado"),
     )
 
-    venta = models.ForeignKey(
-        Ventas, on_delete=models.CASCADE, related_name="detalles_recargas"
-    )
     recarga = models.ForeignKey(RecargaProducto, on_delete=models.PROTECT)
     usuario_juego_id = models.CharField(max_length=50)
     nombre_jugador = models.CharField(max_length=100, blank=True)

@@ -237,30 +237,50 @@ class DetalleVentaRecargaViewSet(viewsets.ModelViewSet):
     serializer_class = DetalleVentaRecargaSerializer
 
     def create(self, request, *args, **kwargs):
-        # Tomamos la última venta si no se envía
-        if "venta" not in request.data:
-            try:
-                ultima_venta = Ventas.objects.latest("id")
-                request.data["venta"] = ultima_venta.id
-            except Ventas.DoesNotExist:
-                return Response({"error": "No hay ventas registradas."}, status=400)
+        data = request.data.copy()
 
-        serializer = self.get_serializer(data=request.data)
+        # Validar que se envíe recarga
+        recarga_id = data.pop("recarga", None)  # ⚡ Importante: remover del dict
+        if not recarga_id:
+            return Response(
+                {"error": "Se requiere recarga"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Obtener objeto RecargaProducto
+        recarga_obj = get_object_or_404(RecargaProducto, id=recarga_id)
+        cantidad = int(data.get("cantidad", 1))
+
+        # Calcular precio y subtotal
+        data["precio"] = recarga_obj.precio_venta
+        data["subtotal"] = recarga_obj.precio_venta * cantidad
+
+        # Serializar sin enviar 'recarga'
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
 
-        # Calcular precio y subtotal automáticamente
-        recarga = serializer.validated_data["recarga"]
-        cantidad = serializer.validated_data["cantidad"]
-        serializer.validated_data["precio"] = recarga.precio_venta
-        serializer.validated_data["subtotal"] = cantidad * recarga.precio_venta
+        # Asignar el objeto recarga directamente en save
+        detalle = serializer.save(recarga=recarga_obj)
 
-        detalle = serializer.save()
-        return Response(self.get_serializer(detalle).data, status=201)
+        return Response(
+            self.get_serializer(detalle).data, status=status.HTTP_201_CREATED
+        )
 
     def update(self, request, *args, **kwargs):
         partial = True
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        data = request.data.copy()
+
+        # Actualizar recarga si se envía
+        recarga_id = data.pop("recarga", None)
+        if recarga_id:
+            recarga_obj = get_object_or_404(RecargaProducto, id=recarga_id)
+            data["precio"] = recarga_obj.precio_venta
+            data["subtotal"] = recarga_obj.precio_venta * int(
+                data.get("cantidad", instance.cantidad)
+            )
+            instance.recarga = recarga_obj  # asignar directamente
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
