@@ -56,6 +56,14 @@ class Command(BaseCommand):
                 "nombre_permiso": "VenderJugos",
                 "descripcion": "permite vender los jeugos mas vendidos",
             },
+            {
+                "nombre_permiso": "Efectivo",
+                "descripcion": "permite vender los jeugos mas vendidos",
+            },
+            {
+                "nombre_permiso": "RecargaMax",
+                "descripcion": "permite vender los jeugos mas vendidos",
+            },
         ]
 
         permisos_objects = []

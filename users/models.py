@@ -209,3 +209,66 @@ class DetalleVentaRecarga(models.Model):
             self.precio = 0
             self.subtotal = 0
         super().save(*args, **kwargs)
+
+
+class Efectivo(models.Model):
+    B200Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    B100Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    B50Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    B20Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    B10Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    M5Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    M2Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    M1 = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    M0_50Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    M0_20Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    M0_10Bs = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    total = models.DecimalField(max_digits=12, decimal_places=2, editable=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.total = (
+            self.B200Bs
+            + self.B100Bs
+            + self.B50Bs
+            + self.B20Bs
+            + self.B10Bs
+            + self.M5Bs
+            + self.M2Bs
+            + self.M1
+            + self.M0_50Bs
+            + self.M0_20Bs
+            + self.M0_10Bs
+        )
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Efectivo {self.total} Bs - {self.fecha_creacion.date()}"
+
+
+class RecargaMax(models.Model):
+    ESTADO_CHOICES = (
+        ("PENDIENTE", "Pendiente"),
+        ("COMPLETADO", "Completado"),
+        ("CANCELADO", "Cancelado"),
+    )
+
+    numero_origen = models.CharField(max_length=20)
+    numero_destino = models.CharField(max_length=20)
+
+    saldo_total = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_carga = models.DecimalField(max_digits=10, decimal_places=2)
+
+    estado = models.CharField(
+        max_length=15, choices=ESTADO_CHOICES, default="PENDIENTE"
+    )
+
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def clean(self):
+        if self.monto_carga <= 0:
+            raise ValidationError("El monto de carga debe ser mayor a 0")
+
+    def __str__(self):
+        return f"Recarga {self.monto_carga} Bs → {self.numero_destino}"

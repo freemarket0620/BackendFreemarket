@@ -4,7 +4,9 @@ from .models import (
     Categorias,
     DetalleVentaRecarga,
     DetallesVentas,
+    Efectivo,
     Productos,
+    RecargaMax,
     RecargaProducto,
     Usuarios,
     Roles,
@@ -105,4 +107,16 @@ class DetalleVentaRecargaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DetalleVentaRecarga
+        fields = "__all__"
+
+
+class EfectivoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Efectivo
+        fields = "__all__"
+
+
+class RecargaMaxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecargaMax
         fields = "__all__"

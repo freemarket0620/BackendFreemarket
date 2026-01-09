@@ -13,7 +13,9 @@ from .models import (
     Categorias,
     DetalleVentaRecarga,
     DetallesVentas,
+    Efectivo,
     Productos,
+    RecargaMax,
     RecargaProducto,
     Usuarios,
     Ventas,
@@ -22,7 +24,9 @@ from .serializers import (
     CategoriaSerializer,
     DetalleVentaRecargaSerializer,
     DetallesVentasSerializer,
+    EfectivoSerializer,
     ProductoSerializer,
+    RecargaMaxSerializer,
     RecargaProductoSerializer,
     VentaSerializer,
 )
@@ -281,6 +285,44 @@ class DetalleVentaRecargaViewSet(viewsets.ModelViewSet):
             instance.recarga = recarga_obj  # asignar directamente
 
         serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+
+class EfectivoViewSet(viewsets.ModelViewSet):
+    queryset = Efectivo.objects.all()
+    serializer_class = EfectivoSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        partial = True
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
+
+class RecargaMaxViewSet(viewsets.ModelViewSet):
+    queryset = RecargaMax.objects.all()
+    serializer_class = RecargaMaxSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        partial = True
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
