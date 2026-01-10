@@ -8,7 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-kw5d5g509&zw(cn14nwvrwa$-$uh&)i9j^w#hajmu_wi1udj5m"
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "freemarkett.netlify.app",
+    "backendfreemarket.onrender.com",
+]
+
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -57,10 +64,10 @@ WSGI_APPLICATION = "main.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "freemarket",
-        "USER": "postgres",
-        "PASSWORD": "13247291",
-        "HOST": "localhost",
+        "NAME": "freemarket_xdek",
+        "USER": "freemarket_xdek_user",
+        "PASSWORD": "EcYaayFRSeONrObHZ3UN0cZOFCCt6kST",
+        "HOST": "dpg-d5ha9b7pm1nc73bv4o7g-a.oregon-postgres.render.com",
         "PORT": "5432",
     }
 }
@@ -129,12 +136,14 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
 }
 
-# CORS Settings
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = False  # Más seguro que True en producción
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
+    "https://freemarkett.netlify.app",
+    "https://backendfreemarket.onrender.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS.copy()
