@@ -64,10 +64,10 @@ WSGI_APPLICATION = "main.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "freemarket",
-        "USER": "postgres",
-        "PASSWORD": "13247291",
-        "HOST": "localhost",
+        "NAME": "freemarket_d9ei",
+        "USER": "freemarket_d9ei_user",
+        "PASSWORD": "VQKjFRxsOm5ZqM439JvGk41yXUTQR7Mp",
+        "HOST": "dpg-d6r5c29j16oc73f177ig-a.oregon-postgres.render.com",
         "PORT": "5432",
     }
 }
