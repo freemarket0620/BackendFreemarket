@@ -2,12 +2,9 @@
 from rest_framework import serializers
 from .models import (
     Categorias,
-    DetalleVentaRecarga,
     DetallesVentas,
     Efectivo,
     Productos,
-    RecargaMax,
-    RecargaProducto,
     Usuarios,
     Roles,
     Permisos,
@@ -93,30 +90,9 @@ class DetallesVentasSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# Serializers para recargas de videojuegos
-class RecargaProductoSerializer(serializers.ModelSerializer):
-    categoria = CategoriaSerializer(read_only=True)
-
-    class Meta:
-        model = RecargaProducto
-        fields = "__all__"
-
-
-class DetalleVentaRecargaSerializer(serializers.ModelSerializer):
-    recarga = RecargaProductoSerializer(read_only=True)
-
-    class Meta:
-        model = DetalleVentaRecarga
-        fields = "__all__"
-
-
 class EfectivoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Efectivo
         fields = "__all__"
 
 
-class RecargaMaxSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RecargaMax
-        fields = "__all__"

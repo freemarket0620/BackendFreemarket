@@ -158,57 +158,6 @@ class DetallesVentas(models.Model):
         return f"Detalle de {self.cantidad} {self.producto.nombre_producto} en la venta {self.venta.id}"
 
 
-# NUEVOS MODELOS DE CONTROL DE ACCESO
-class RecargaProducto(models.Model):
-    categoria = models.ForeignKey(
-        Categorias, on_delete=models.CASCADE, related_name="recargas"
-    )
-    nombre = models.CharField(max_length=100)
-    cantidad = models.PositiveIntegerField()
-    precio_compra = models.DecimalField(
-        max_digits=10, decimal_places=2
-    )  # loque yo pago a la empresa
-    precio_venta = models.DecimalField(
-        max_digits=10, decimal_places=2
-    )  # lo que el cliente paga
-    estado = models.BooleanField(default=True)
-
-    def __str__(self):
-        return f"{self.nombre} ({self.cantidad})"
-
-
-class DetalleVentaRecarga(models.Model):
-    ESTADO_CHOICES = (
-        ("PENDIENTE", "Pendiente"),
-        ("COMPLETADO", "Completado"),
-        ("CANCELADO", "Cancelado"),
-    )
-
-    recarga = models.ForeignKey(RecargaProducto, on_delete=models.PROTECT)
-    usuario_juego_id = models.CharField(max_length=50)
-    nombre_jugador = models.CharField(max_length=100, blank=True)
-    password_jugador = models.CharField(max_length=100, blank=True)
-    cantidad = models.PositiveIntegerField(default=1)
-    precio = models.DecimalField(
-        max_digits=10, decimal_places=2, editable=False, default=0
-    )
-    subtotal = models.DecimalField(
-        max_digits=12, decimal_places=2, editable=False, default=0
-    )
-    estado = models.CharField(
-        max_length=15, choices=ESTADO_CHOICES, default="PENDIENTE"
-    )
-
-    def save(self, *args, **kwargs):
-        # Asegurarse de que la recarga exista y tenga precio
-        if self.recarga_id:
-            recarga_obj = RecargaProducto.objects.get(id=self.recarga_id)
-            self.precio = recarga_obj.precio_venta
-            self.subtotal = self.precio * self.cantidad
-        else:
-            self.precio = 0
-            self.subtotal = 0
-        super().save(*args, **kwargs)
 
 
 class Efectivo(models.Model):
@@ -246,29 +195,3 @@ class Efectivo(models.Model):
     def __str__(self):
         return f"Efectivo {self.total} Bs - {self.fecha_creacion.date()}"
 
-
-class RecargaMax(models.Model):
-    ESTADO_CHOICES = (
-        ("PENDIENTE", "Pendiente"),
-        ("COMPLETADO", "Completado"),
-        ("CANCELADO", "Cancelado"),
-    )
-
-    numero_origen = models.CharField(max_length=20)
-    numero_destino = models.CharField(max_length=20)
-
-    saldo_total = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_carga = models.DecimalField(max_digits=10, decimal_places=2)
-
-    estado = models.CharField(
-        max_length=15, choices=ESTADO_CHOICES, default="PENDIENTE"
-    )
-
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-
-    def clean(self):
-        if self.monto_carga <= 0:
-            raise ValidationError("El monto de carga debe ser mayor a 0")
-
-    def __str__(self):
-        return f"Recarga {self.monto_carga} Bs → {self.numero_destino}"

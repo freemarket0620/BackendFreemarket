@@ -11,23 +11,17 @@ import cloudinary.uploader
 
 from .models import (
     Categorias,
-    DetalleVentaRecarga,
     DetallesVentas,
     Efectivo,
     Productos,
-    RecargaMax,
-    RecargaProducto,
     Usuarios,
     Ventas,
 )
 from .serializers import (
     CategoriaSerializer,
-    DetalleVentaRecargaSerializer,
     DetallesVentasSerializer,
     EfectivoSerializer,
     ProductoSerializer,
-    RecargaMaxSerializer,
-    RecargaProductoSerializer,
     VentaSerializer,
 )
 from django.shortcuts import get_object_or_404
@@ -201,95 +195,6 @@ class DetallesVentasViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-""" nueva seccion   de vnetas de juegos """
-
-
-class RecargaProductoViewSet(viewsets.ModelViewSet):
-    queryset = RecargaProducto.objects.all()
-    serializer_class = RecargaProductoSerializer
-
-    def create(self, request, *args, **kwargs):
-        data = request.data.copy()
-        categoria_id = request.data.get("categoria")
-        try:
-            data["categoria"] = get_object_or_404(Categorias, id=categoria_id)
-        except:
-            return Response(
-                {"error": "La categoría especificada no existe."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        recarga = RecargaProducto.objects.create(**data)
-        return Response(
-            RecargaProductoSerializer(recarga).data, status=status.HTTP_201_CREATED
-        )
-
-    def update(self, request, *args, **kwargs):
-        partial = True
-        instance = self.get_object()
-        data = request.data.copy()
-        categoria_id = request.data.get("categoria")
-        if categoria_id:
-            instance.categoria = get_object_or_404(Categorias, id=categoria_id)
-        serializer = self.get_serializer(instance, data=data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-
-class DetalleVentaRecargaViewSet(viewsets.ModelViewSet):
-    queryset = DetalleVentaRecarga.objects.all()
-    serializer_class = DetalleVentaRecargaSerializer
-
-    def create(self, request, *args, **kwargs):
-        data = request.data.copy()
-
-        # Validar que se envíe recarga
-        recarga_id = data.pop("recarga", None)  # ⚡ Importante: remover del dict
-        if not recarga_id:
-            return Response(
-                {"error": "Se requiere recarga"}, status=status.HTTP_400_BAD_REQUEST
-            )
-
-        # Obtener objeto RecargaProducto
-        recarga_obj = get_object_or_404(RecargaProducto, id=recarga_id)
-        cantidad = int(data.get("cantidad", 1))
-
-        # Calcular precio y subtotal
-        data["precio"] = recarga_obj.precio_venta
-        data["subtotal"] = recarga_obj.precio_venta * cantidad
-
-        # Serializar sin enviar 'recarga'
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-
-        # Asignar el objeto recarga directamente en save
-        detalle = serializer.save(recarga=recarga_obj)
-
-        return Response(
-            self.get_serializer(detalle).data, status=status.HTTP_201_CREATED
-        )
-
-    def update(self, request, *args, **kwargs):
-        partial = True
-        instance = self.get_object()
-        data = request.data.copy()
-
-        # Actualizar recarga si se envía
-        recarga_id = data.pop("recarga", None)
-        if recarga_id:
-            recarga_obj = get_object_or_404(RecargaProducto, id=recarga_id)
-            data["precio"] = recarga_obj.precio_venta
-            data["subtotal"] = recarga_obj.precio_venta * int(
-                data.get("cantidad", instance.cantidad)
-            )
-            instance.recarga = recarga_obj  # asignar directamente
-
-        serializer = self.get_serializer(instance, data=data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-
 class EfectivoViewSet(viewsets.ModelViewSet):
     queryset = Efectivo.objects.all()
     serializer_class = EfectivoSerializer
@@ -309,20 +214,3 @@ class EfectivoViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class RecargaMaxViewSet(viewsets.ModelViewSet):
-    queryset = RecargaMax.objects.all()
-    serializer_class = RecargaMaxSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def update(self, request, *args, **kwargs):
-        partial = True
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)

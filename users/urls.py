@@ -19,13 +19,8 @@ router.register(r"productos", views_produtos.ProductosViewSet)
 router.register(r"ventas", views_produtos.VentasViewSet)
 router.register(r"detallesventas", views_produtos.DetallesVentasViewSet)
 
-# rutas de ventas de jeugos
-router.register(r"RecargaProducto", views_produtos.RecargaProductoViewSet)
-router.register(r"DetalleVentaRecarga", views_produtos.DetalleVentaRecargaViewSet)
-
 # rutas de nuevas tablas
 router.register(r"efectivo", views_produtos.EfectivoViewSet)
-router.register(r"recarga-max", views_produtos.RecargaMaxViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
