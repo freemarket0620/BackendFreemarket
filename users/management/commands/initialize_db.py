@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.hashers import make_password
 from users.models import Roles, Permisos, Usuarios, UsuariosRoles, RolesPermisos
 from datetime import date
-# Targetas
 
 class Command(BaseCommand):
     help = "Inicializa la base de datos con datos básicos"
